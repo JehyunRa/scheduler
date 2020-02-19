@@ -20,7 +20,7 @@ const getInterview = function(state, interview) {
       interviewer: state.interviewers[interview.interviewer]
     }
   }
-  console.log(resultObject);
+  
   return resultObject;
 }
 

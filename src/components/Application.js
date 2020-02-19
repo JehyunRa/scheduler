@@ -9,7 +9,7 @@ const { getAppointmentsForDay, getInterview, getInterviewersForDay } = require("
 export default function Application() {
   const {
     state,
-    setDay,
+    SetDay,
     bookInterview,
     cancelInterview
   } = useApplicationData();
@@ -38,7 +38,7 @@ export default function Application() {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          {setDay}
+          <SetDay />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
