@@ -64,7 +64,7 @@ export default function useApplicationData() {
 
   socket.onmessage = event => {
     const data = JSON.parse(event.data);
-    console.log(event.data);
+    // console.log(event.data);
 
     if (data.type === "SET_INTERVIEW") {
       const appointment = {
@@ -118,7 +118,7 @@ export default function useApplicationData() {
         interviewers: response[2].data
       });
     }).catch(error => {
-      console.log('error fetching data');
+      console.log(error);
     })
   }
 
