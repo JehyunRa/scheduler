@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "components/Appointment/styles.scss";
 import Header from "components/Appointment/header";
 import Show from "components/Appointment/show";
@@ -24,6 +24,19 @@ export default function Appointment(props) {
     props.interview ? SHOW : EMPTY
   );
 
+  // update appointment changes using socket
+  useEffect(() => {
+    let interview = null;
+    if (props.interview) interview = props.interview;
+    if (interview && mode === EMPTY) {
+     transition(SHOW);
+    }
+    if (interview === null && mode === SHOW) {
+     transition(EMPTY);
+    }
+  }, [props.interview, transition, mode]);
+
+  // when save button is pressed from Form
   function save(name, interviewer) {
     const interview = {
       student: name,
@@ -43,6 +56,7 @@ export default function Appointment(props) {
     }
   }
 
+  // when cancel button is pressed from Form
   function cancel() {
     transition(DELETE, true);
 
@@ -62,7 +76,7 @@ export default function Appointment(props) {
       {mode === EMPTY && (
         <Empty onAdd={() => transition(CREATE)} />
       )}
-      {mode === SHOW && (
+      {mode === SHOW && props.interview && (
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer}

@@ -1,4 +1,4 @@
-const spotsRemaining = function(state, id, isBooking) {
+const spotsRemaining = function(state, id, interview) {
   let dayN = null;
   let count = 5;
 
@@ -20,7 +20,8 @@ const spotsRemaining = function(state, id, isBooking) {
     }
   }
 
-  if (isBooking === true) count -= 1;
+  // if content of interview recieved by socket isn't null: reduce count by 1
+  if (interview !== null) count -= 1;
 
   return { dayN, count };
 };
