@@ -38,6 +38,7 @@ export default function Appointment(props) {
 
   // when save button is pressed from Form
   function save(name, interviewer) {
+
     const interview = {
       student: name,
       interviewer
@@ -111,7 +112,7 @@ export default function Appointment(props) {
       {mode === EDIT && (
         <Form
           interviewers={props.interviewers}
-          onCancel={() => back()}
+          onCancel={back}
           onSave={save}
           name={props.interview.student}
           interviewer={interviewerId}
