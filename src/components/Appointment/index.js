@@ -43,17 +43,15 @@ export default function Appointment(props) {
       interviewer
     };
 
-    if (interviewer !== null) {
-      transition(SAVE, true);
+    transition(SAVE, true);
 
-      props.bookInterview(props.id, interview)
-      .then(response => {
-        transition(SHOW);
-      })
-      .catch(error => {
-        transition(ERROR, true);
-      })
-    }
+    props.bookInterview(props.id, interview)
+    .then(response => {
+      transition(SHOW);
+    })
+    .catch(error => {
+      transition(ERROR, true);
+    })
   }
 
   // when cancel button is pressed from Form
@@ -67,6 +65,12 @@ export default function Appointment(props) {
     .catch(error => {
       transition(ERROR, true);
     })
+  }
+
+  // crash protection against case of editing interview with no interviewer selected
+  let interviewerId = null;
+  if (props.interview !== null && props.interview !== undefined) {
+    if (props.interview.interviewer !== undefined) interviewerId = props.interview.interviewer.id;
   }
 
   return (
@@ -110,7 +114,7 @@ export default function Appointment(props) {
           onCancel={() => back()}
           onSave={save}
           name={props.interview.student}
-          interviewer={props.interview.interviewer.id}
+          interviewer={interviewerId}
         />
       )}
       {mode === ERROR && (
