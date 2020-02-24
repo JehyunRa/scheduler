@@ -32,7 +32,7 @@ export default function Form(props) {
       <section className="appointment__card-left">
         <form 
           autoComplete="off"
-          onSubmit={event => event.preventDefault()}
+          onSubmit={event => event.preventDefault}
         >
           <input
             className="appointment__create-input text--semi-bold"
