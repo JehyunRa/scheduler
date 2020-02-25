@@ -29,10 +29,11 @@ export default function Appointment(props) {
     let interview = null;
     if (props.interview) interview = props.interview;
     if (interview && mode === EMPTY) {
-     transition(SHOW);
+      console.log('check');
+      transition(SHOW);
     }
     if (interview === null && mode === SHOW) {
-     transition(EMPTY);
+      transition(EMPTY);
     }
   }, [props.interview, transition, mode]);
 
@@ -75,7 +76,10 @@ export default function Appointment(props) {
   }
 
   return (
-    <article className="appointment" data-testid="appointment"
+    <article
+      className="appointment"
+      data-testid="appointment"
+      appointment_id={props.id}
     >
       <Header time={props.time} />
       {mode === EMPTY && (

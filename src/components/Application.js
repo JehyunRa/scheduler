@@ -1,7 +1,6 @@
 import React from "react";
 import "components/Application.scss";
 import Appointment from "components/Appointment";
-
 import useApplicationData from "../hooks/useApplicationData";
 
 const { getAppointmentsForDay, getInterview, getInterviewersForDay } = require("../helpers/selectors");

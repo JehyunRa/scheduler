@@ -1,6 +1,7 @@
 import React, { useReducer } from "react";
 import Axios from "axios";
 import DayList from "components/DayList";
+import reducer, { SET_DAY, SET_DATA, SET_INTERVIEW, SET_SPOTS } from "reducers/application";
 
 const { spotsRemaining } = require("../helpers/spotsRemaining");
 
@@ -20,41 +21,6 @@ cancelInterview = make http request and update local state
 
 export default function useApplicationData() {
 
-  const SET_DAY = "SET_DAY";
-  const SET_DATA = "SET_DATA";
-  const SET_INTERVIEW = "SET_INTERVIEW";
-  const SET_SPOTS = "SET_SPOTS";
-  
-  function reducer(state, action) {
-    switch (action.type) {
-      case SET_DAY:
-        return { ...state, day: action.day }
-      case SET_DATA:
-        return {
-          ...state,
-          days: action.days,
-          appointments: action.appointments,
-          interviewers: action.interviewers
-        }
-      case SET_INTERVIEW: {
-        return {
-          ...state,
-          appointments: action.appointments
-        }
-      }
-      case SET_SPOTS: {
-        return {
-          ...state,
-          days: action.days
-        }
-      }
-      default:
-        throw new Error(
-          `Tried to reduce with unsupported action type: ${action.type}`
-        );
-    }
-  }
-
   const [state, dispatch] = useReducer(reducer, {
     day: "Monday",
     days: [],
@@ -69,19 +35,10 @@ export default function useApplicationData() {
     if (data.type === "SET_INTERVIEW") {
       data.id = parseInt(data.id);
 
-      const appointment = {
-        ...state.appointments[data.id],
-        interview: data.interview
-      };
-
-      const appointments = {
-        ...state.appointments,
-        [data.id]: appointment
-      };
-
       dispatch({
         type: SET_INTERVIEW,
-        appointments
+        id: data.id,
+        interview: data.interview
       })
 
       const { dayN, count } = spotsRemaining(state, data.id, data.interview);
