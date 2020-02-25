@@ -5,7 +5,7 @@ import DayList from "components/DayList";
 const { spotsRemaining } = require("../helpers/spotsRemaining");
 
 // this thing below is throwing errors in JEST atm
-const socket = new WebSocket('ws://localhost:8001'); // (`${process.env.REACT_APP_WEBSOCKET_URL}`);
+const socket = new WebSocket(`${process.env.REACT_APP_WEBSOCKET_URL}`);
 
 socket.onopen = function(event) {
   socket.send("ping");
@@ -64,9 +64,11 @@ export default function useApplicationData() {
 
   socket.onmessage = event => {
     const data = JSON.parse(event.data);
-    // console.log(event.data);
+    console.log("onmessage: ", event.data);
 
     if (data.type === "SET_INTERVIEW") {
+      data.id = parseInt(data.id);
+
       const appointment = {
         ...state.appointments[data.id],
         interview: data.interview
@@ -159,6 +161,7 @@ export default function useApplicationData() {
   function cancelInterview(id) {
     return new Promise((res, rej) => {
   
+      console.log('sending: ', id);
       Axios.delete(
         `http://localhost:8001/api/appointments/${id}`
       )

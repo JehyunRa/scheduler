@@ -1,4 +1,8 @@
+import WS from "jest-websocket-mock"
+const server = new WS("ws://localhost:8001");
+
 export default {
+  
   get: jest.fn(url => {
     if (url === "http://localhost:8001/api/days") {
       return Promise.resolve({
@@ -21,6 +25,28 @@ export default {
         status: 200,
         statusText: "OK",
         data: fixtures.interviewers
+      });
+    }
+  }),
+
+  put: jest.fn((url, req) => {
+    if (url.slice(0, 39) === `http://localhost:8001/api/appointments/`) {
+      server.send(JSON.stringify( { type: "SET_INTERVIEW", id: parseInt(url.slice(39)), interview: { student: req.interview.student, interviewer: req.interview.interviewer } } ));
+      return Promise.resolve({
+        status: 200,
+        statusText: "OK",
+        data: { status: 204, statusText: "No Content" }
+      });
+    }
+  }),
+
+  delete: jest.fn(url => {
+    if (url.slice(0, 39) === `http://localhost:8001/api/appointments/`) {
+      server.send(JSON.stringify( { type: "SET_INTERVIEW", id: parseInt(url.slice(39)), interview: null } ));
+      return Promise.resolve({
+        status: 200,
+        statusText: "OK",
+        data: { status: 204, statusText: "No Content" }
       });
     }
   })
@@ -80,3 +106,4 @@ const fixtures = {
     }
   }
 };
+

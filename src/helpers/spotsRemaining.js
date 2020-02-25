@@ -1,12 +1,13 @@
 const spotsRemaining = function(state, id, interview) {
   let dayN = null;
-  let count = 5;
+  let count = 0;
 
   // looking in days
   for (const d of state.days) {
     // in current day
     if (d.name === state.day) {
       dayN = d.id - 1;
+      count = d.appointments.length;
       // for each of appointment in current day
       for (const a of d.appointments) {
         if (
