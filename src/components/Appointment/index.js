@@ -29,31 +29,31 @@ export default function Appointment(props) {
     let interview = null;
     if (props.interview) interview = props.interview;
     if (interview && mode === EMPTY) {
-     transition(SHOW);
+      console.log('check');
+      transition(SHOW);
     }
     if (interview === null && mode === SHOW) {
-     transition(EMPTY);
+      transition(EMPTY);
     }
   }, [props.interview, transition, mode]);
 
   // when save button is pressed from Form
   function save(name, interviewer) {
+
     const interview = {
       student: name,
       interviewer
     };
 
-    if (interviewer !== null) {
-      transition(SAVE, true);
+    transition(SAVE, true);
 
-      props.bookInterview(props.id, interview)
-      .then(response => {
-        transition(SHOW);
-      })
-      .catch(error => {
-        transition(ERROR, true);
-      })
-    }
+    props.bookInterview(props.id, interview)
+    .then(response => {
+      transition(SHOW);
+    })
+    .catch(error => {
+      transition(ERROR, true);
+    })
   }
 
   // when cancel button is pressed from Form
@@ -69,8 +69,17 @@ export default function Appointment(props) {
     })
   }
 
+  // crash protection against case of editing interview with no interviewer selected
+  let interviewerId = null;
+  if (props.interview !== null && props.interview !== undefined) {
+    if (props.interview.interviewer !== undefined) interviewerId = props.interview.interviewer.id;
+  }
+
   return (
-    <article className="appointment"
+    <article
+      className="appointment"
+      data-testid="appointment"
+      appointment_id={props.id}
     >
       <Header time={props.time} />
       {mode === EMPTY && (
@@ -107,10 +116,10 @@ export default function Appointment(props) {
       {mode === EDIT && (
         <Form
           interviewers={props.interviewers}
-          onCancel={() => back()}
+          onCancel={back}
           onSave={save}
           name={props.interview.student}
-          interviewer={props.interview.interviewer.id}
+          interviewer={interviewerId}
         />
       )}
       {mode === ERROR && (
