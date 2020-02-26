@@ -66,9 +66,9 @@ export default function useApplicationData() {
 
   if (state && state.days.length === 0) {
     Promise.all([
-      Axios.get("http://localhost:8001/api/days"),
-      Axios.get("http://localhost:8001/api/appointments"),
-      Axios.get("http://localhost:8001/api/interviewers")
+      Axios.get("api/days"),
+      Axios.get("api/appointments"),
+      Axios.get("api/interviewers")
     ]).then(response => {
       dispatch({
         type: SET_DATA,
@@ -102,7 +102,7 @@ export default function useApplicationData() {
       };      
       console.log('sending: ', appointment);
       Axios.put(
-        `http://localhost:8001/api/appointments/${id}`,
+        `api/appointments/${id}`,
         appointment
       )
       .then(response => {
@@ -120,7 +120,7 @@ export default function useApplicationData() {
   
       console.log('sending: ', id);
       Axios.delete(
-        `http://localhost:8001/api/appointments/${id}`
+        `api/appointments/${id}`
       )
       .then(response => {
         res(response);
