@@ -4,7 +4,7 @@ const server = new WS("ws://localhost:8001");
 export default {
   
   get: jest.fn(url => {
-    if (url === "http://localhost:8001/api/days") {
+    if (url === "api/days") {
       return Promise.resolve({
         status: 200,
         statusText: "OK",
@@ -12,7 +12,7 @@ export default {
       });
     }
 
-    if (url === "http://localhost:8001/api/appointments") {
+    if (url === "api/appointments") {
       return Promise.resolve({
         status: 200,
         statusText: "OK",
@@ -20,7 +20,7 @@ export default {
       });
     }
 
-    if (url === "http://localhost:8001/api/interviewers") {
+    if (url === "api/interviewers") {
       return Promise.resolve({
         status: 200,
         statusText: "OK",
@@ -30,7 +30,7 @@ export default {
   }),
 
   put: jest.fn((url, req) => {
-    if (url.slice(0, 39) === `http://localhost:8001/api/appointments/`) {
+    if (url.slice(0, 39) === `api/appointments/`) {
       server.send(JSON.stringify( { type: "SET_INTERVIEW", id: parseInt(url.slice(39)), interview: { student: req.interview.student, interviewer: req.interview.interviewer } } ));
       return Promise.resolve({
         status: 200,
@@ -41,7 +41,7 @@ export default {
   }),
 
   delete: jest.fn(url => {
-    if (url.slice(0, 39) === `http://localhost:8001/api/appointments/`) {
+    if (url.slice(0, 39) === `api/appointments/`) {
       server.send(JSON.stringify( { type: "SET_INTERVIEW", id: parseInt(url.slice(39)), interview: null } ));
       return Promise.resolve({
         status: 200,

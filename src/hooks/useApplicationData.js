@@ -66,9 +66,9 @@ export default function useApplicationData() {
 
   if (state && state.days.length === 0) {
     Promise.all([
-      Axios.get("api/days"),
-      Axios.get("api/appointments"),
-      Axios.get("api/interviewers")
+      Axios.get(`api/days`),
+      Axios.get(`api/appointments`),
+      Axios.get(`api/interviewers`)
     ]).then(response => {
       dispatch({
         type: SET_DATA,
