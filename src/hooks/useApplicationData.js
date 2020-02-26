@@ -5,11 +5,10 @@ import reducer, { SET_DAY, SET_DATA, SET_INTERVIEW, SET_SPOTS } from "reducers/a
 
 const { spotsRemaining } = require("../helpers/spotsRemaining");
 
-// this thing below is throwing errors in JEST atm
 const socket = new WebSocket(`${process.env.REACT_APP_WEBSOCKET_URL}`);
 
 socket.onopen = function(event) {
-  // socket.send("ping");
+  socket.send("ping");
 }
 
 /*
@@ -131,30 +130,3 @@ export default function useApplicationData() {
 
   return { state, SetDay, bookInterview, cancelInterview };
 }
-
-/*
-
-//--------- setState method examples for reference: ----------//
-
-import { useState } from "react";
-
-const [state, setState] = useState({
-  day: "Monday",
-  days: [],
-  appointments: {},
-  interviewers: {}
-})
-
-setState(current => ({
-  ...state,
-  days: response[0].data,
-  appointments: response[1].data,
-  interviewers: response[2].data
-}));
-
-setState({
-  ...state,
-  appointments
-});
-
-*/
