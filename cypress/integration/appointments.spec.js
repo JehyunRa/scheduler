@@ -1,7 +1,7 @@
 describe("Appointments", () => {
   // prep //
   beforeEach(() => {
-    cy.request("GET", "/api/debug/reset");
+    cy.request("GET", "http://localhost:8001/api/debug/reset");
     cy.visit("/");
     cy.contains("Monday");
   });
@@ -30,7 +30,9 @@ describe("Appointments", () => {
       .click({ force: true });
     cy.get('input.appointment__create-input')
       .clear()
-      .type('cypress');
+      .type('Lydia Miller-Jones');
+    cy.get('[alt="Tori Malcolm"]')
+    .click();
     cy.get('button.button--confirm')
       .click();
 
