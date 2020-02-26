@@ -30,8 +30,8 @@ export default {
   }),
 
   put: jest.fn((url, req) => {
-    if (url.slice(0, 39) === `api/appointments/`) {
-      server.send(JSON.stringify( { type: "SET_INTERVIEW", id: parseInt(url.slice(39)), interview: { student: req.interview.student, interviewer: req.interview.interviewer } } ));
+    if (url.slice(0, 17) === `api/appointments/`) {
+      server.send(JSON.stringify( { type: "SET_INTERVIEW", id: parseInt(url.slice(17)), interview: { student: req.interview.student, interviewer: req.interview.interviewer } } ));
       return Promise.resolve({
         status: 200,
         statusText: "OK",
@@ -41,8 +41,8 @@ export default {
   }),
 
   delete: jest.fn(url => {
-    if (url.slice(0, 39) === `api/appointments/`) {
-      server.send(JSON.stringify( { type: "SET_INTERVIEW", id: parseInt(url.slice(39)), interview: null } ));
+    if (url.slice(0, 17) === `api/appointments/`) {
+      server.send(JSON.stringify( { type: "SET_INTERVIEW", id: parseInt(url.slice(17)), interview: null } ));
       return Promise.resolve({
         status: 200,
         statusText: "OK",

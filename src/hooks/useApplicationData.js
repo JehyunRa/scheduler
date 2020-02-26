@@ -10,6 +10,7 @@ const socket = new WebSocket(`${process.env.REACT_APP_WEBSOCKET_URL}`);
 
 socket.onopen = function(event) {
   socket.send("ping");
+  // console.log('socket connection made');
 }
 
 /*
@@ -30,7 +31,7 @@ export default function useApplicationData() {
 
   socket.onmessage = event => {
     const data = JSON.parse(event.data);
-    console.log("onmessage: ", event.data);
+    // console.log("onmessage: ", event.data);
 
     if (data.type === "SET_INTERVIEW") {
       data.id = parseInt(data.id);
@@ -65,13 +66,13 @@ export default function useApplicationData() {
   }
 
   if (state && state.days.length === 0) {
-    console.log('starting download');
+    // console.log('starting download');
     Promise.all([
       Axios.get("api/days"),
       Axios.get("api/appointments"),
       Axios.get("api/interviewers")
     ]).then(response => {
-      console.log(response);
+      // console.log(response);
       dispatch({
         type: SET_DATA,
         days: response[0].data,
@@ -102,7 +103,7 @@ export default function useApplicationData() {
         ...state.appointments[id],
         interview: { ...interview }
       };      
-      console.log('sending: ', appointment);
+      // console.log('sending: ', appointment);
       Axios.put(
         `api/appointments/${id}`,
         appointment
@@ -120,7 +121,7 @@ export default function useApplicationData() {
   function cancelInterview(id) {
     return new Promise((res, rej) => {
   
-      console.log('sending: ', id);
+      // console.log('sending: ', id);
       Axios.delete(
         `api/appointments/${id}`
       )
