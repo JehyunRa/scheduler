@@ -62,7 +62,6 @@ describe("Application", () => {
     const { container } = render(<Application />);
 
     await waitForElement(() => getByText(container, "Archie Cohen"));
-    console.log('starting application test 2:', prettyDOM(container));
 
     const appointment = getAllByTestId(container, "appointment").find(
       appointment => queryByText(appointment, "Archie Cohen")
